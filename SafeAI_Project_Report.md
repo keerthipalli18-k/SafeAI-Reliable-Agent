@@ -1,143 +1,198 @@
-# SAFEAI – PROJECT REPORT
+# SafeAI – A Reliable AI Agent with Tool Validation and Human Approval
 
 ## 1. Introduction
 
-SafeAI is a Python-based prototype that demonstrates how tool execution can be made safer using input validation and human approval.
+Artificial Intelligence is becoming an important part of modern technology. AI agents can understand user requests and perform different tasks using available tools. However, executing every request without checking it can create errors and unexpected results.
 
-The system accepts user requests, identifies supported tools, validates the inputs, and asks for human approval before executing an action.
+SafeAI is a project developed to demonstrate how an automated agent can perform tasks in a controlled and reliable way.
 
-It uses Supabase to store activity logs and Streamlit to display the application dashboard.
+The project uses request interpretation, input validation, human approval, controlled tool execution, and activity logging.
 
 ## 2. Problem Statement
 
-Automated systems may perform incorrect or unwanted actions when user requests are not properly checked.
+Automated systems may receive incorrect, incomplete, or unsupported user requests. If these requests are executed without validation or approval, they can produce unwanted results.
 
-SafeAI addresses this problem by introducing validation, human approval, and activity logging before and after tool execution.
+Therefore, a system is needed to check user requests, allow human confirmation, and maintain records of the activities performed.
 
-## 3. Objectives
+## 3. Project Objectives
 
-- Understand user requests.
-- Identify supported tools.
-- Validate inputs before execution.
-- Request human approval.
-- Prevent invalid actions.
-- Store execution details in Supabase.
-- Display activity logs through Streamlit.
+- To understand and process user requests.
+- To validate inputs before executing tools.
+- To provide human approval and rejection options.
+- To execute only supported tools.
+- To store activity records in a database.
+- To provide an interactive dashboard for users.
 
 ## 4. Technologies Used
 
-| Technology | Application |
+| Technology | Purpose |
 |---|---|
-| Python | Application development |
-| Streamlit | Web dashboard |
-| Supabase | Database |
-| Regular Expressions | Rule-based request interpretation |
-| VS Code | Code development |
+| Python | Main programming language |
+| Streamlit | Interactive dashboard |
+| Supabase | Database and activity logging |
+| VS Code | Development environment |
+| Git | Version control |
+| GitHub | Project hosting |
 
-## 5. System Modules
+## 5. System Architecture
 
-### 5.1 Request Interpreter
+The system architecture explains how different components of SafeAI communicate with each other.
 
-Identifies supported requests using predefined rules and keywords.
+The application follows this workflow:
 
-### 5.2 Validator
-
-Checks whether the requested tool and its arguments are valid.
-
-### 5.3 Human Approval
-
-Allows the user to approve or reject a proposed action.
-
-### 5.4 Calculator
-
-Performs addition, subtraction, multiplication, and division.
-
-### 5.5 Draft Creator
-
-Creates text drafts using a title and content.
-
-### 5.6 Activity Logger
-
-Stores tool activity, validation status, approval status, and execution results.
-
-### 5.7 Streamlit Dashboard
-
-Provides a user interface for submitting requests, reviewing actions, and viewing activity logs.
-
-## 6. Working Process
-
-1. The user enters a request.
-2. The interpreter identifies the requested action.
-3. The validator checks the inputs.
+1. User enters a request.
+2. Request Interpreter identifies the requested operation.
+3. Validator checks the input and tool details.
 4. Invalid requests are rejected.
-5. Valid requests are displayed for human approval.
-6. The user approves or rejects the action.
-7. Approved actions are executed.
-8. The activity is recorded in Supabase.
-9. The dashboard displays recent activity records.
+5. Valid requests are sent for human approval.
+6. The user approves or rejects the proposed action.
+7. Approved actions are executed using the selected tool.
+8. Activity details are stored in Supabase.
+9. The result is displayed to the user.
 
-## 7. Database Design
+The architecture is documented separately in the `architecture.md` file in the GitHub repository.
 
-The project uses a Supabase table named `tool_logs`.
+## 6. Main Components
 
-| Column | Purpose |
-|---|---|
-| id | Record identifier |
-| tool_name | Name of the selected tool |
-| input_data | Arguments supplied to the tool |
-| validation_status | Valid or Invalid |
-| approval_status | Approved, Rejected, or Not requested |
-| execution_result | Result or rejection message |
-| created_at | Record creation time |
+### 6.1 Request Interpreter
+
+The Request Interpreter identifies supported requests and extracts the required information using predefined Python rules.
+
+### 6.2 Validator
+
+The Validator checks whether the selected tool and its arguments are correct. It checks required fields, data types, supported operations, and invalid values.
+
+### 6.3 Human Approval
+
+The system displays the proposed action to the user. The user can approve or reject it before execution.
+
+### 6.4 Tool Execution
+
+The system currently contains two tools:
+
+- Calculator: Performs addition, subtraction, multiplication, and division.
+- Draft Creator: Creates a message using the title and content provided by the user.
+
+### 6.5 Activity Logger
+
+The Activity Logger records tool names, input data, validation status, approval status, and execution results.
+
+### 6.6 Supabase Database
+
+Supabase stores the activity records generated by the application. These records can be reviewed later.
+
+### 6.7 Streamlit Dashboard
+
+The dashboard allows users to enter requests, view proposed actions, approve or reject requests, and check activity logs.
+
+## 7. Implementation
+
+The project was developed using separate Python modules to make the application easier to understand and maintain.
+
+The main files include:
+
+- `main.py` – Runs the command-line application.
+- `dashboard.py` – Creates the Streamlit dashboard.
+- `agent.py` – Controls the request validation and execution workflow.
+- `request_interpreter.py` – Identifies supported user requests.
+- `validator.py` – Checks inputs and tool arguments.
+- `approval.py` – Handles human approval.
+- `logger.py` – Stores activity records.
+- `supabase_client.py` – Connects Python to Supabase.
+- `tools/calculator.py` – Contains calculator operations.
+- `tools/draft_creator.py` – Creates message drafts.
+- `architecture.md` – Documents the system architecture and workflow.
 
 ## 8. Testing and Results
 
-The following tests were performed:
+Different requests were tested to check whether the application worked correctly.
 
-| Test | Result |
-|---|---|
-| Calculator addition | Passed |
-| Calculator subtraction | Passed |
-| Draft creation | Passed |
-| Human approval | Passed |
-| Human rejection | Passed |
-| Division by zero validation | Passed |
-| Unsupported request rejection | Passed |
-| Supabase activity logging | Passed |
-| Streamlit activity display | Passed |
+### Test 1: Calculator
 
-## 9. Screenshots
+A calculator request was entered, validated, approved, and executed successfully.
 
-The following screenshots are included as project evidence:
+### Test 2: Draft Creator
 
-1. SafeAI dashboard.
-2. Calculator execution.
-3. Draft Creator execution.
-4. Human approval screen.
-5. Human rejection result.
-6. Division-by-zero rejection.
-7. Unsupported request rejection.
-8. Supabase activity logs.
-9. Streamlit activity log table.
+A message was created using a title and content. The application requested human approval before creating the draft.
 
-## 10. Limitations
+### Test 3: Human Rejection
 
-- The current request interpreter is rule-based.
-- The application does not yet use an LLM API.
-- Only two tools are currently supported.
-- Further security and reliability testing is required.
+A valid request was rejected by the user. The system prevented the operation from executing.
 
-## 11. Future Enhancements
+### Test 4: Invalid Request
 
-- Integrate an LLM API.
-- Add more controlled tools.
-- Improve request understanding.
-- Add user authentication.
-- Improve approval safeguards.
-- Add advanced activity monitoring.
+A division-by-zero request was tested. The validator identified the problem and rejected the request.
 
-## 12. Conclusion
+### Test 5: Supabase Logging
 
-SafeAI demonstrates how input validation, human approval, and activity logging can help control tool execution.
+The database was checked to confirm that activity records were stored successfully.
 
-The prototype provides a foundation for building more reliable and responsible AI agent systems.
+## 9. Screenshots and Results
+
+The following screenshots demonstrate the working application:
+
+1. SafeAI Dashboard
+2. Calculator Execution
+3. Draft Creator Execution
+4. Human Approval
+5. Human Rejection
+6. Invalid Request Validation
+7. Supabase Activity Logs
+8. Streamlit Dashboard Activity Logs
+
+Each screenshot provides evidence of the corresponding project functionality.
+
+## 10. Safety Observations
+
+SafeAI demonstrates several important safety principles:
+
+- Input validation helps identify incorrect requests.
+- Human approval gives users control over proposed actions.
+- Unsupported tools are rejected.
+- Invalid calculator operations are blocked.
+- Activity logging provides a record of system operations.
+
+These features help make tool execution more controlled and transparent.
+
+## 11. Limitations
+
+The current version is a basic prototype.
+
+- Request interpretation uses predefined Python rules rather than a real LLM.
+- Only two tools are currently available.
+- The system supports a limited number of request formats.
+- More advanced permission and monitoring features can be added.
+
+## 12. Future Improvements
+
+Future improvements may include:
+
+- Integrating a Large Language Model API.
+- Adding more tools and supported operations.
+- Improving natural-language understanding.
+- Introducing user roles and permissions.
+- Improving error handling and monitoring.
+- Adding more advanced security checks.
+
+## 13. What I Learned
+
+Through this project, I learned how to develop a Python application using separate modules. I gained experience with Streamlit, Supabase, Git, and GitHub.
+
+I also understood the importance of input validation, human approval, controlled tool execution, database integration, and system architecture.
+
+## 14. Conclusion
+
+SafeAI is a beginner-level prototype that demonstrates how an automated agent can perform selected tasks with proper validation and human supervision.
+
+By combining request interpretation, validation, approval, tool execution, and activity logging, the project provides a basic example of a reliable agent workflow.
+
+The project helped me understand that building an automated system is not only about performing tasks but also about making sure those tasks are checked, controlled, and recorded properly.
+
+## 15. Project Repository
+
+GitHub: https://github.com/keerthipalli18-k/SafeAI-Reliable-Agent
+
+Main documentation:
+- README.md
+- architecture.md
+- SafeAI_Project_Report.md
